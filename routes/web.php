@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/helo', function () {
-    return "HELLO WORLD dari laravel";
+    return "HELLO WORLD dari laravel" ();
 });
 
 Route::get('/nama', function () {
