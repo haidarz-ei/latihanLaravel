@@ -10,7 +10,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         $data = Mahasiswa::all();
-        return view('mahasiswa.index', compact('data'));
+        return view('mahasiswa.mahasiswa', compact('data'));
     }
 
     public function store(Request $request)
