@@ -16,7 +16,7 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
-        Mahasiswa::create($request->only('namaRuangan', 'kapasitas'));
+        Ruangan::create($request->only('namaRuangan', 'kapasitas'));
         return redirect()->back();
     }
 }
