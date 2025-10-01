@@ -1,27 +1,28 @@
 <?php
 
-<<<<<<< Updated upstream
-=======
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\DosenController;
 
->>>>>>> Stashed changes
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< Updated upstream
+
 Route::get('/helo', function () {
-    return "HELLO WORLD dari laravel" ();
-=======
-Route::get('/dashboard', function () {
+    return "HELLO WORLD dari laravel";
+});
+
+    Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -52,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
     Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('dosen.destroy');
 
->>>>>>> Stashed changes
+
 });
 
 Route::get('/nama', function () {
