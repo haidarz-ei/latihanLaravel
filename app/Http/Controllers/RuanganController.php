@@ -37,7 +37,7 @@ class RuanganController extends Controller
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->update($request->only('namaRuangan', 'kapasitas'));
 
-        return redirect()->route('ruangan.ruangan')->with('success', 'Data berhasil di update!');
+        return redirect()->route('ruangan.index')->with('success', 'Data berhasil di update!');
     }
 
     // Delete
@@ -46,6 +46,6 @@ class RuanganController extends Controller
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->delete();
 
-        return redirect()->route('ruangan.ruangan')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('ruangan.index')->with('success', 'Data berhasil dihapus!');
     }
 }

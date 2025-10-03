@@ -37,7 +37,7 @@ class MatkulController extends Controller
         $matkul = Matkul::findOrFail($id);
         $matkul->update($request->only('namaMatkul', 'deskripsi'));
 
-        return redirect()->route('matkul.matkul')->with('success', 'Data berhasil di update!');
+        return redirect()->route('matkul.index')->with('success', 'Data berhasil di update!');
     }
 
     // Delete
@@ -46,6 +46,6 @@ class MatkulController extends Controller
         $matkul = Matkul::findOrFail($id);
         $matkul->delete();
 
-        return redirect()->route('matkul.matkul')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('matkul.index')->with('success', 'Data berhasil dihapus!');
     }
 }

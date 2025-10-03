@@ -37,7 +37,7 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::findOrFail($id);
         $mhs->update($request->only('nama', 'nim'));
 
-        return redirect()->route('mahasiswa.mahasiswa')->with('success', 'Data berhasil di update!');
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di update!');
     }
 
     // Delete
@@ -46,6 +46,6 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::findOrFail($id);
         $mhs->delete();
 
-        return redirect()->route('mahasiswa.mahasiswa')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil dihapus!');
     }
 }

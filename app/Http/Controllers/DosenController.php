@@ -37,7 +37,7 @@ class DosenController extends Controller
         $dosen = Dosen::findOrFail($id);
         $dosen->update($request->only('namaDosen', 'nid'));
 
-        return redirect()->route('dosen.dosen')->with('success', 'Data berhasil di update!');
+        return redirect()->route('dosen.index')->with('success', 'Data berhasil di update!');
     }
 
     // Delete
@@ -46,6 +46,6 @@ class DosenController extends Controller
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
 
-        return redirect()->route('dosen.dosen')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('dosen.index')->with('success', 'Data berhasil dihapus!');
     }
 }
