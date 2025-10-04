@@ -37,9 +37,9 @@
                         <thead class="bg-gray-200 text-gray-700">
                             <tr>
                                 <th class="px-4 py-2 w-16 text-center">No</th>
-                                <th class="px-4 py-2">Nama MataKuliah</th>
+                                <th class="px-4 py-2">MataKuliah</th>
                                 <th class="px-4 py-2">Deskripsi</th>
-                                <th class="px-4 py-2 w-16 text-center">Aksi</th>
+                                <th class="px-4 py-2 w-40 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

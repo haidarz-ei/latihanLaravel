@@ -5,8 +5,46 @@
         </h2>
     </x-slot>
 
+    {{-- Notifikasi Sukses (Hijau) --}}
+    @if (session('success'))
+        <div 
+            x-data="{ show: true }" 
+            x-show="show"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="transform -translate-y-full opacity-0"
+            x-transition:enter-end="transform translate-y-0 opacity-100"
+            class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded shadow-lg z-50"
+            style="max-width: 90%;"
+        >
+            <div class="flex items-start justify-between space-x-4">
+                <span>{{ session('success') }}</span>
+                <button @click="show = false" class="text-green-700 hover:text-green-900 font-bold text-lg leading-none">&times;</button>
+            </div>
+        </div>
+    @endif
+
+    {{-- Notifikasi Error (Merah) --}}
+    @if (session('error'))
+        <div 
+            x-data="{ show: true }" 
+            x-show="show"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="transform -translate-y-full opacity-0"
+            x-transition:enter-end="transform translate-y-0 opacity-100"
+            class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded shadow-lg z-50"
+            style="max-width: 90%;"
+        >
+            <div class="flex items-start justify-between space-x-4">
+                <span>{{ session('error') }}</span>
+                <button @click="show = false" class="text-red-700 hover:text-red-900 font-bold text-lg leading-none">&times;</button>
+            </div>
+        </div>
+    @endif
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
 
             {{-- Form Tambah Mahasiswa --}}
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
@@ -17,7 +55,13 @@
                         @csrf
                             <input type="text" name="nama" placeholder="Nama" class="border-gray-300 rounded-md w-full">
                             <input type="text" name="nim" placeholder="NIM" class="border-gray-300 rounded-md w-full">
-                        
+
+                        <select name="kelas_id" class="border-gray-300 rounded-md w-full">
+                            <option value="">-- Pilih Kelas --</option>
+                            @foreach($kelas as $kls)
+                            <option value="{{ $kls->id }}">{{ $kls->nama_kelas}}</option>
+                            @endforeach
+                        </select>
 
                         <button type="submit"
                             class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
@@ -37,7 +81,8 @@
                                 <th class="px-4 py-2 w-16 text-center">No</th>
                                 <th class="px-4 py-2">Nama</th>
                                 <th class="px-4 py-2">NIM</th>
-                                <th class="px-4 py-2 w-16 text-center">Aksi</th>
+                                <th class="px-4 py-2">Kelas</th>
+                                <th class="px-4 py-2 w-40 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +91,7 @@
                                 <td class="border px-4 py-2 text-center">{{ $loop->iteration }}</td>
                                 <td class="border px-4 py-2">{{ $mhs->nama }}</td>
                                 <td class="border px-4 py-2">{{ $mhs->nim }}</td>
+                                <td class="border px-4 py-2">{{ $mhs->kelas->nama_kelas ?? '-' }}</td>
                                 <td class="border px-4 py-2 text-center">
                                     <a href="{{ route('mahasiswa.edit', $mhs->id) }}" 
                                     class="inline-block px-3 py-1 bg-yellow-500 text-white rounded">

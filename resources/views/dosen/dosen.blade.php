@@ -36,7 +36,7 @@
                                 <th class="px-4 py-2 w-16 text-center">No</th>
                                 <th class="px-4 py-2">Nama Dosen</th>
                                 <th class="px-4 py-2">NID</th>
-                                <th class="px-4 py-2 w-16 text-center">Aksi</th>
+                                <th class="px-4 py-2 w-40 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
