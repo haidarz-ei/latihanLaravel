@@ -15,8 +15,16 @@ class MatkulController extends Controller
 
     public function store(Request $request)
     {
-        Matkul::create($request->only('namaMatkul', 'deskripsi'));
-        return redirect()->back();
+        $request->validate([
+            'namaMatkul' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        Matkul::create([
+            'namaMatkul' => $request->namaMatkul,
+            'deskripsi' => $request->deskripsi,
+        ]);
+        return redirect()->back()->with('success', 'Data Mata Kuliah berhasil ditambahkan');
     }
 
     // Edit
@@ -46,6 +54,6 @@ class MatkulController extends Controller
         $matkul = Matkul::findOrFail($id);
         $matkul->delete();
 
-        return redirect()->route('matkul.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('matkul.index')->with('error', 'Data berhasil dihapus!');
     }
 }

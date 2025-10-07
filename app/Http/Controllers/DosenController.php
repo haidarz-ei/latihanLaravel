@@ -13,10 +13,24 @@ class DosenController extends Controller
         return view('dosen.dosen', compact('data'));
     }
 
-    public function store(Request $request)
+    // public function store(Request $request)
+    // {
+    //     Dosen::create($request->only('namaDosen', 'nid'));
+    //     return redirect()->back();
+    // }
+
+        public function store(Request $request)
     {
-        Dosen::create($request->only('namaDosen', 'nid'));
-        return redirect()->back();
+        $request->validate([
+            'namaDosen' => 'required',
+            'nid' => 'required',
+        ]);
+
+        Dosen::create([
+            'namaDosen' => $request->namaDosen,
+            'nid' => $request->nid,
+        ]);
+        return redirect()->back()->with('success', 'Data Dosen berhasil ditambahkan');
     }
 
     // Edit
@@ -46,6 +60,6 @@ class DosenController extends Controller
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
 
-        return redirect()->route('dosen.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('dosen.index')->with('error', 'Data berhasil dihapus!');
     }
 }

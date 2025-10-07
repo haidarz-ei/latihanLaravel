@@ -15,8 +15,16 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
-        Ruangan::create($request->only('namaRuangan', 'kapasitas'));
-        return redirect()->back();
+        $request->validate([
+            'namaRuangan' => 'required',
+            'kapasitas' => 'required',
+        ]);
+
+        Ruangan::create([
+            'namaRuangan' => $request->namaRuangan,
+            'kapasitas' => $request->kapasitas,
+        ]);
+        return redirect()->back()->with('success', 'Data Mata Kuliah berhasil ditambahkan');
     }
 
     // Edit
@@ -46,6 +54,6 @@ class RuanganController extends Controller
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->delete();
 
-        return redirect()->route('ruangan.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('ruangan.index')->with('error', 'Data berhasil dihapus!');
     }
 }
