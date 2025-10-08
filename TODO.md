@@ -1,0 +1,15 @@
+- Remove JetstreamServiceProvider from bootstrap/providers.php ✓
+- Delete app/Providers/JetstreamServiceProvider.php ✓
+- Delete app/Actions/Jetstream/DeleteUser.php ✓
+- Delete resources/views/api/ directory ✓
+- Delete resources/views/auth/ directory ✓
+- Delete resources/views/components/ directory ✓
+- Delete resources/views/emails/ directory ✓
+- Delete resources/views/profile/ directory ✓
+- Delete resources/views/navigation-menu.blade.php ✓
+- Delete resources/views/policy.blade.php ✓
+- Delete resources/views/terms.blade.php ✓
+- Remove FortifyServiceProvider and related files ✓
+- Clean User model from Jetstream/Fortify traits ✓
+- Install Breeze views and routes ✓
+- Test the application: Login route available ✓
