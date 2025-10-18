@@ -8,7 +8,7 @@ class kelas extends Model
 {
     protected $table = 'kelas';
 
-    protected $filable = [
+    protected $fillable = [
         'nama_kelas'
     ];
 
