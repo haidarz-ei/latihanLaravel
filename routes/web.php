@@ -73,9 +73,7 @@ Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register'
 //     Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
 //     Route::post('step1', [EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
 //     // step2
-//     Route::get('step2', function () {
-//         return "Step 2: upload Dokumen (belum dibuat)";
-//     })->name('ekyc.step2');
+//     Route::get('step2', function () {return "Step 2: upload Dokumen (belum dibuat)";})->name('ekyc.step2');
 //     Route::get('/ekyc/step2', [EkycController::class, 'step2'])->name('ekyc.step2');
 //     Route::post('/ekyc/step2', [EkycController::class,'storeStep2'])->name('ekyc.step2.store');
 
@@ -95,6 +93,10 @@ Route::prefix('ekyc')->group(function () {
 
 
 require __DIR__.'/auth.php';
+
+
+
+
 
 
 
