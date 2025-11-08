@@ -1,7 +1,9 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto mt-12 bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-xl font-semibold text-center mb-6">eKYC - Step 2: Upload Dokumen</h2>
-
+        <h2 class="text-xl font-semibold mb-4 text-center">
+            Step 2 - Dokumen Pribadi
+        </h2>
+        
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
@@ -19,7 +21,7 @@
                 @endif
 
                 @if ($data && $data->file_ktp)
-                    <img src="{{ asset('storage/' . $data->file_ktp) }}" class="h-32 rounded mt-2 max-h-48 border"/>
+                    <img src="{{ asset('storage/' . $data->file_ktp) }}" class="h-32 w-48 rounded mt-2 border object-cover"/>
                 @endif
             </div>
 
@@ -32,16 +34,17 @@
             </div>
 
             @if ($data && $data->file_selfie)
-                <img src="{{ asset('storage/' . $data->file_selfie) }}" class="h-32 rounded mt-2 max-h-48 border"/>
+                <img src="{{ asset('storage/' . $data->file_selfie) }}" class="h-32 w-48 rounded mt-2 border object-cover"/>
             @endif
-        
 
-            <div class="flex justify-end mt-6">
+
+            {{-- Tombol Navigasi --}}
+            <div class="flex justify-between items-center mt-4">
                 <a href="{{ route('ekyc.step1') }}" class="mr-4 inline-block bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition duration-200">
                     Back
                 </a>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
-                    Submit Dokumen
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Simpan & Lanjut Step 3
                 </button>
             </div>
         </form>

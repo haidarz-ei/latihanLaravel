@@ -44,7 +44,15 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+//
+        $user = Auth::user();
 
-        return redirect(route('dashboard', absolute: false));
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->route('ekyc.step1');
+
+        // return redirect(route('dashboard', absolute: false));
     }
 }
