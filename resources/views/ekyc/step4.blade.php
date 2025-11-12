@@ -18,7 +18,7 @@
             {{-- Alamat Domisili Lengkap --}}
             <div class="mb-3">
                 <label class="block text-sm font-medium text-gray-700">Alamat Domisili Lengkap</label>
-                <textarea name="alamatDomisili" class="w-full border-gray-300 rounded-md">{{ old('alamatDomisili', $data->alamatDomisili) }}</textarea>
+                <textarea name="alamat_domisili" class="w-full border-gray-300 rounded-md">{{ old('alamat_domisili', $data->alamat_domisili) }}</textarea>
             </div>
 
             {{-- Provinsi --}}
@@ -63,25 +63,23 @@
             {{-- Kode Pos --}}
             <div class="mb-3">
                 <label class="block text-sm font-medium text-gray-700">Kode Pos</label>
-                <input type="text" name="kode_pos" id="kode_pos" class="w-full border-gray-300 rounded-md"
-                       value="{{ old('kode_pos', $data->kode_pos) }}" readonly>
+                <input type="text" name="kode_pos" id="kode_pos" value="{{ old('kode_pos', $data->kode_pos) }}" readonly>   
             </div>
 
             {{-- Nama Ibu Kandung --}}
             <div class="mb-3">
                 <label class="block text-sm font-medium text-gray-700">Nama Ibu Kandung</label>
-                <input type="text" name="nama_ibu_kandung" id="nama_ibu_kandung" class="w-full border-gray-300 rounded-md"
-                       value="{{ old('nama_ibu_kandung', $data->nama_ibu_kandung) }}">
+                <input type="text" name="nama_ibu" id="nama_ibu" value="{{ old('nama_ibu', $data->nama_ibu) }}">
             </div>
 
-            {{-- Referensi Informasi --}}
+            {{-- Referensi Informasi --}} 
             <div class="mb-3">
                 <label class="block text-sm font-medium text-gray-700">Sumber Informasi Pendaftaran</label>
-                <select name="referensi_sumber" id="referensi_sumber" class="w-full border-gray-300 rounded-md">
+                <select name="sumber_informasi" id="sumber_informasi">
                     <option value="">-- Pilih Sumber Informasi --</option>
-                    <option value="Teman" {{ old('referensi_sumber', $data->referensi_sumber) == 'Teman' ? 'selected' : '' }}>Teman</option>
-                    <option value="Sosial Media" {{ old('referensi_sumber', $data->referensi_sumber) == 'Sosial Media' ? 'selected' : '' }}>Sosial Media</option>
-                    <option value="Langsung dari Kampus" {{ old('referensi_sumber', $data->referensi_sumber) == 'Langsung dari Kampus' ? 'selected' : '' }}>Langsung dari Kampus</option>
+                    <option value="Teman" {{ old('sumber_informasi', $data->sumber_informasi) == 'Teman' ? 'selected' : '' }}>Teman</option>
+                    <option value="Sosial Media" {{ old('sumber_informasi', $data->sumber_informasi) == 'Sosial Media' ? 'selected' : '' }}>Sosial Media</option>
+                    <option value="Langsung dari Kampus" {{ old('sumber_informasi', $data->sumber_informasi) == 'Langsung dari Kampus' ? 'selected' : '' }}>Langsung dari Kampus</option>
                 </select>
             </div>
 

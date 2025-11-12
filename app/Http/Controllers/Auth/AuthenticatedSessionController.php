@@ -29,24 +29,23 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // redirect berdasarkan role
         if ($user->role === 'admin') {
             return redirect()->route('dashboard');
         }
 
-        // ambil data eKYC milik user yang login
         $ekyc = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
 
-        if ($ekyc && $ekyc->status == 'submitted') {
-            // jika eKYC sudah selesai
-            return redirect()->route('ekyc.step5');
-        } else {
-            // Jika belum ada atau belum selesai
-            return redirect()->route('ekyc.step1');
+        if ($ekyc) {
+            if ($ekyc->status === 'accepted' || $ekyc->status === 'rejected') {
+                return redirect()->route('ekyc.status');
+            } elseif ($ekyc->status === 'submitted') {
+                return redirect()->route('ekyc.step5');
+            } else {
+                return redirect()->route('ekyc.step1');
+            }
         }
 
-        // default redirect untuk user biasa
-        // return redirect()->route('ekyc.step1');
+        return redirect()->route('ekyc.step1');
     }
 
     /**

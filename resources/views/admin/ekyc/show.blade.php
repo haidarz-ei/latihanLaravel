@@ -107,10 +107,10 @@
                 <div class="flex items-center gap-4">
                     <label class="w-48 text-sm font-medium text-gray-700">Ubah Status</label>
                     <select name="status" class="flex-1 border border-gray-300 rounded-md p-2 text-sm">
-                        <option value="Accepted" {{ $data->status == 'accepted' ? 'selected' : '' }}>Diterima</option>
-                        <option value="Submitted" {{ $data->status == 'submitted' ? 'selected' : '' }}>Menunggu Verifikasi</option>
-                        <option value="Draft" {{ $data->status == 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="Rejected" {{ $data->status == 'rejected' ? 'selected' : '' }}>Ditolak</option>
+                        <option value="accepted" {{ $data->status == 'accepted' ? 'selected' : '' }}>Diterima</option>
+                        <option value="submitted" {{ $data->status == 'submitted' ? 'selected' : '' }}>Menunggu Verifikasi</option>
+                        <option value="draft" {{ $data->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="rejected" {{ $data->status == 'rejected' ? 'selected' : '' }}>Ditolak</option>
                     </select>
                 </div>
                 <div class="flex items-center gap-4 mt-2">

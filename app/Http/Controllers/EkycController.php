@@ -263,13 +263,34 @@ class EkycController extends Controller
             return redirect()->route('ekyc.step1')->with('error', 'Data eKYC tidak ditemukan');
         }
 
-        // pastikan hanya user dengan status selesai yang bisa melihat halaman ini
+        // kalau sudah diverifikasi admin
+        if ($data->status === 'accepted' || $data->status === 'rejected') {
+            return view('ekyc.status', ['status' => $data->status]);
+        }
+
+        // kalau belum selesai kirim data (masih proses submit)
         if ($data->status !== 'submitted') {
             return redirect()->route('ekyc.step4')->with('error', 'Lengkapi data terlebih dahulu sebelum menyelesaikan eKYC');
         }
 
+        // tampilkan step5 normal
         return view('ekyc.step5', compact('data'));
     }
+
+
+    public function showStatus()
+    {
+        $ekyc = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
+
+        if (!$ekyc) {
+            return redirect()->route('ekyc.step1');
+        }
+
+        $status = strtolower($ekyc->status);
+
+        return view('ekyc.status', compact('status'));
+    }
+
 }
 
 

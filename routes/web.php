@@ -101,8 +101,9 @@ Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register'
 
 // Route::prefix('ekyc')->group(function () {
 Route::middleware('auth')->prefix('ekyc')->group(function () {
+    Route::get('status', [EkycController::class, 'showStatus'])->name('ekyc.status');
+
     Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
-    
     Route::post('step1', [EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
 
     Route::get('step2', function () {

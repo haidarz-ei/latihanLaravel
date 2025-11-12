@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\EkycRegistration;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class EkycAdminController extends Controller
@@ -16,7 +15,7 @@ class EkycAdminController extends Controller
         return view('admin.ekyc.index', compact('list'));
     }
 
-    // Tampilkan detail satu pendatar
+    // Tampilkan detail satu pendaftar
     public function show($id)
     {
         $data = EkycRegistration::with('user')->findOrFail($id);
@@ -31,7 +30,7 @@ class EkycAdminController extends Controller
         ]);
 
         $data = EkycRegistration::findOrFail($id);
-        $data->status = $request->status;
+        $data->status = strtolower($request->status); // pastikan huruf kecil
         $data->save();
 
         return redirect()->route('admin.ekyc.index')
