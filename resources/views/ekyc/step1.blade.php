@@ -46,10 +46,7 @@
 
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium mb-1">Address</label>
-                <textarea name="alamat" rows="3" 
-                    class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200" 
-                    required>{{ old('alamat', $ekyc->alamat ?? '') }}
-                </textarea>
+                <textarea name="alamat" rows="3" class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200" required>{{ old('alamat', $ekyc->alamat ?? '') }}</textarea>
             </div>
 
 

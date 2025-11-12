@@ -7,12 +7,14 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\DosenController;
 
-use App\Http\Controllers\Auth\StudentRegisterController;
-
 use App\Http\Controllers\EkycController;
 
+use App\Http\Controllers\Auth\StudentRegisterController;
+
+use App\Http\Controllers\Admin\EkycAdminController;
 
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +47,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
     Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+
+    Route::resource('ruangan', RuanganController::class)->middleware('auth');
+    Route::resource('matkul', MatkulController::class)->middleware('auth');
+    Route::resource('dosen', DosenController::class)->middleware('auth');
+
+    Route::prefix('admin')->middleware('auth')->group(function () {
+        Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
+        Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
+        Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
 
     // ruangan
     Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
@@ -90,6 +102,7 @@ Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register'
 // Route::prefix('ekyc')->group(function () {
 Route::middleware('auth')->prefix('ekyc')->group(function () {
     Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
+    
     Route::post('step1', [EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
 
     Route::get('step2', function () {
