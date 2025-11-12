@@ -271,3 +271,5 @@ class EkycController extends Controller
         return view('ekyc.step5', compact('data'));
     }
 }
+
+
