@@ -53,7 +53,7 @@
         <!-- Dokumen eKYC -->
         <section class="mt-8 border-t pt-6 px-4">
             <h3 class="text-lg font-semibold mb-4">Dokumen eKYC</h3>
-            <div class="flex flex-wrap gap-6">
+            <div class="flex justify-between gap-4">
                 @foreach ([
                     'File_ktp' => 'file_ktp',
                     'File_selfie' => 'file_selfie',
@@ -61,10 +61,10 @@
                     'File_ijazah' => 'file_ijazah',
                 ] as $label => $field)
                     @if ($data->$field)
-                        <div class="flex flex-col items-center w-[110px]">
+                        <div class="flex flex-col items-center flex-1">
                             <p class="text-xs font-medium mb-1">{{ $label }}</p>
-                            <a href="{{ asset('storage/' . $data->$field) }}" target="_blank" class="border rounded-md overflow-hidden shadow-sm hover:shadow-lg">
-                                <img src="{{ asset('storage/' . $data->$field) }}" class="w-28 h-36 object-contain bg-gray-100">
+                            <a href="{{ asset('storage/' . $data->$field) }}" target="_blank" class="border rounded-md overflow-hidden shadow-sm hover:shadow-lg w-full">
+                                <img src="{{ asset('storage/' . $data->$field) }}" class="w-full h-24 object-contain bg-gray-100">
                             </a>
                         </div>
                     @endif

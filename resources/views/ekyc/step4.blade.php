@@ -37,10 +37,10 @@
             {{-- Kota --}}
             <div class="mb-3">
                 <label class="block text-sm font-medium text-gray-700">Kota</label>
-                <select name="kota" id="kota" class="w-full border-gray-300 rounded-md">
+                <select name="kota_kab" id="kota" class="w-full border-gray-300 rounded-md">
                     <option value="">-- Pilih Kota --</option>
                     @foreach ($kotaList as $kota)
-                        <option value="{{ $kota }}" {{ old('kota', $data->kota) == $kota ? 'selected' : '' }}>
+                        <option value="{{ $kota }}" {{ old('kota_kab', $data->kota_kab) == $kota ? 'selected' : '' }}>
                             {{ $kota }}
                         </option>
                     @endforeach

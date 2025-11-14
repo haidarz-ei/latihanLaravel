@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('file_kk')->nullable();
             $table->string('file_ijazah')->nullable();
             $table->string('file_selfie')->nullable();
-            $table->enum('status', ['draft', 'submitted'])->default('draft'); 
+            $table->string('status')->default('draft'); // Ubah ke string untuk SQLite compatibility
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

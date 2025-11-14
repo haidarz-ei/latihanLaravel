@@ -11,7 +11,7 @@
         <div class="overflow-x-auto">
             <table class="w-full border-collapse border border-gray-300 text-sm">
                 <thead>
-                    <tr class="bg-gray-100">
+                    <tr class="bg-blue-600 text-white">
                         <th class="border p-2">No</th>
                         <th class="border p-2">Nama</th>
                         <th class="border p-2">NIK</th>
@@ -22,16 +22,16 @@
                 </thead>
                 <tbody>
                     @forelse ($list as $i => $row)
-                        <tr class="hover:bg-gray-50">
+                        <tr class="{{ $i % 2 == 0 ? 'bg-blue-50' : 'bg-white' }} hover:bg-gray-100">
                             <td class="border p-2 text-center">{{ $i + 1 }}</td>
                             <td class="border p-2">{{ $row->user->name ?? '-' }}</td>
                             <td class="border p-2">{{ $row->nik ?? '-' }}</td>
                             <td class="border p-2">
-                                <span class="px-2 py-1 rounded text-white text-xs font-medium
-                                    @if($row->status == 'draft') bg-gray-500
-                                    @elseif($row->status == 'submitted') bg-yellow-500
-                                    @elseif($row->status == 'accepted') bg-green-500
-                                    @elseif($row->status == 'rejected') bg-red-500
+                                <span class="px-2 py-1 rounded text-black text-xs font-medium
+                                    @if($row->status == 'draft') bg-gray-300
+                                    @elseif($row->status == 'submitted') bg-yellow-300
+                                    @elseif($row->status == 'accepted') bg-green-300
+                                    @elseif($row->status == 'rejected') bg-red-300
                                     @endif">
                                     {{ ucfirst($row->status) }}
                                 </span>
@@ -47,7 +47,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr class="bg-blue-50">
                             <td colspan="6" class="border p-3 text-center text-gray-500">
                                 Belum ada data.
                             </td>
