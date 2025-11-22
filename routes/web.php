@@ -8,17 +8,24 @@ use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\DosenController;
 
 use App\Http\Controllers\EkycController;
-
 use App\Http\Controllers\Auth\StudentRegisterController;
-
 use App\Http\Controllers\Admin\EkycAdminController;
+
+use App\Http\Controllers\LandingController;
+
+use App\http\Controllers\Admin\LandingSettingController;
+use App\http\Controllers\Admin\LandingProgramController;
+use App\http\Controllers\Admin\LandingNavLinkController;
+use App\http\Controllers\Admin\LandingFooterLinkController;
 
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
 
 Route::get('/helo', function () {
@@ -56,6 +63,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
         Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
         Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
+
+    /** landing page CMS */
+    Route::prefix('admin/landing')->name('admin.landing.')->group(function () {
+        Route::resource('settings', LandingSettingController::class)->only(['index', 'edit', 'update']);
+        Route::resource('programs', LandingProgramController::class)->except(['show']);
+        Route::resource('navigation', LandingNavLinkController::class)->except(['show']);
+        Route::resource('footer', LandingFooterLinkController::class)->except(['show']);
+        Route::post('footer/reorder', [LandingFooterLinkController::class, 'reorder'])->name('admin.landing.footer.reorder');
+        Route::patch('footer/{id}/status', [LandingFooterLinkController::class, 'toggleStatus'])->name('admin.landing.footer.toggleStatus');
     });
 
     // ruangan
