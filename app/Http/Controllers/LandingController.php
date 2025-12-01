@@ -15,28 +15,36 @@ class LandingController extends Controller
     public function index()
     {
         // ambil setting sebagai array key-value
-        $landing = Cache::remember('landing_settings', 60, function () {
+        $landing = Cache::remember('landing_settings', 5, function () {
             return LandingSetting::pluck('value', 'key')->toArray();
         });
 
-        $programs = Cache::remember('landing_programs', 60, function () {
+        $programs = Cache::remember('landing_programs', 5, function () {
             return LandingProgram::where('status', 1)
             ->orderBy('position')
             ->get();
         });
 
-        $navigation = Cache::remember('landing_navigation', 60, function () {
+        $navigation = Cache::remember('landing_navigation', 5, function () {
             return LandingNavLink::where('status', 1)
             ->orderBy('position')
             ->get();
         });
 
-        $footer = Cache::remember('landing_footer_links', 60, function () {
+        $footer = Cache::remember('landing_footer', 5, function () {
             return LandingFooterLink::where('status', 1)
+            ->where('group','!=', NULL)
             ->orderBy('position')
             ->get();
         });
 
-        return view('welcome', compact('landing', 'programs', 'navigation', 'footer'));
+        $footerNav = Cache::remember('landing_footer', 5, function () {
+            return LandingFooterLink::where('group', 'nav')
+                ->orderBy('position')
+                ->get();
+        });
+
+        return view('welcome', compact('landing', 'programs', 'navigation', 'footer', 'footerNav'));
+
     }
 }

@@ -16,8 +16,10 @@ class LandingProgram extends Model
         'description',
         'icon',
         'position',
-        'status',
+        'image',
+        'status'
     ];
+
 
     protected $casts = [
         'position' => 'integer',

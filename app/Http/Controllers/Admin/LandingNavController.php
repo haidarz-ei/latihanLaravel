@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LandingNavItem;
+use App\Models\LandingNavLink;
 use Illuminate\Http\Request;
 
 class LandingNavController extends Controller
 {
     public function index() {
-        $items = LandingNavItem::orderBy('order')->get(); 
+        $items = LandingNavLink::orderBy('position')->get(); 
         return view('admin.landing.nav.index', compact('items'));
     }
 
@@ -21,27 +21,27 @@ class LandingNavController extends Controller
         $request->validate([
             'label' => 'required|string|max:255',
             'url' => 'required|url|max:255',
-            'order' => 'required|integer',
+            'position' => 'required|integer',
         ]);
 
-        LandingNavItem::create($request->all());
+        LandingNavLink::create($request->all());
         return redirect()->route('admin.landing.nav.index')->with('success', 'Menu Created Successfully.');
     }
 
     public function edit($id) {
-        $item = LandingNavItem::findOrFail($id);
+        $item = LandingNavLink::findOrFail($id);
         return view('admin.landing.nav.edit', compact('item'));
     }
 
     public function update(Request $request, $id)
     {
-        $item = LandingNavItem::findOrFail($id);
+        $item = LandingNavLink::findOrFail($id);
         $item->update($request->all());
         return redirect()->route('admin.landing.nav.index')->with('success', 'Menu Updated Successfully.');
     }
 
     public function destroy($id) {
-        LandingNavItem::destroy($id);
+        LandingNavLink::destroy($id);
         return back()->with('success', 'Menu Deleted Successfully.');
     }
 }

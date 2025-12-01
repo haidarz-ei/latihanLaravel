@@ -34,7 +34,10 @@ class LandingProgramController extends Controller
         }
 
         LandingProgram::create($data);
-        return redirect()->route('admin.landing.programs.index')->with('success', 'Program added.');
+
+        return redirect()
+            ->route('admin.landing.programs.index')
+            ->with('success', 'Program added.');
     }
 
     public function edit($id) 
@@ -59,12 +62,16 @@ class LandingProgramController extends Controller
         }
 
         $program->update($data);
-        return redirect()->route('admin.landing.programs.index')->with('success', 'Program updated.');
+
+        return redirect()
+            ->route('admin.landing.programs.index')
+            ->with('success', 'Program updated.');
     }
 
     public function destroy($id) 
     {
         LandingProgram::destroy($id);
+
         return back()->with('success', 'Program removed.');
     }
 }

@@ -26,7 +26,7 @@ class LandingFooterController extends Controller
     {
     $request->validate([
         'label' => 'required|string|max:255',
-        'url' => 'required|url|max:255',
+        'url' => 'required|string|max:255',
         'status' => 'required|boolean',
     ]);
 
@@ -54,14 +54,16 @@ class LandingFooterController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'url' => 'required|url|max:255',
+            'url' => 'required|string|max:255',
+            'position' => 'required|integer|min:0',
             'status' => 'required|boolean',
         ]);
-        
+
         $footer = LandingFooterLink::findOrFail($id);
         $footer->update([
             'label' => $request->label,
             'url' => $request->url,
+            'position' => $request->position,
             'status' => $request->status,
         ]);
 
@@ -81,7 +83,7 @@ class LandingFooterController extends Controller
     public function reorder(Request $request) 
     {
         foreach ($request ->order as $order) {
-            LandingFooterLink::where('id', $order[$id])
+            LandingFooterLink::where('id', $order['id'])
                 ->update(['position' => $order['position']]);
         }
         return response()->json(['message' => 'Urutan footer berhasil diperbaharui.']);

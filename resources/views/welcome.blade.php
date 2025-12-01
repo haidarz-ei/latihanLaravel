@@ -20,11 +20,12 @@
             </h1>
 
             <!-- Navigation Links -->
-            <nav class="space-x-6 hidden md:flex">
-                <a href="#beranda" class="text-gray-700 hover:text-blue-600">Beranda</a>
-                <a href="#program" class="text-gray-700 hover:text-blue-600">Program</a>
-                <a href="#tentang" class="text-gray-700 hover:text-blue-600">Tentang</a>
-                <a href="#kontak" class="text-gray-700 hover:text-blue-600">Kontak</a>
+            <nav class="hidden md:flex gap-8 text-gray-700 font-medium">
+                @foreach ($navigation as $nav)
+                    <a href="{{ $nav->url }}" class="hover:text-blue-600">
+                        {{ $nav->label }}
+                    </a>
+                @endforeach
             </nav>
             <div class="space-x-4 hidden md:flex">
                 @if (Route::has('login'))
@@ -129,10 +130,12 @@
             <div>
                 <h4 class="font-bold text-lg mb-2">Navigasi</h4>
                 <ul class="space-y-1">
-                    <li><a href="#beranda" class="hover:underline">Beranda</a></li>
-                    <li><a href="#program" class="hover:underline">Program</a></li>
-                    <li><a href="#tentang" class="hover:underline">Tentang</a></li>
-                    <li><a href="#kontak" class="hover:underline">Kontak</a></li>
+                    @foreach ($footerNav as $itemNav)
+                        <li><a href="{{ $itemNav->url }}" class="hover:underline">
+                                {{ $itemNav->label }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div>
