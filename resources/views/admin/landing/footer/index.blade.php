@@ -8,11 +8,35 @@
     <div x-data="footerPage()" class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @if(session('success'))
-                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
+{{-- Flash & Validation Alerts --}}
+<div>
+    {{-- Success --}}
+    @if(session('success'))
+        <div x-data="{ show: true }" x-show="show" x-transition.opacity
+             @click.away="show=false"
+             class="mb-4 p-4 bg-green-100 text-green-700 rounded flex justify-between items-center">
+            <span>{{ session('success') }}</span>
+            <button @click="show=false" class="ml-4 font-bold">&times;</button>
+        </div>
+    @endif
+
+    {{-- Validation Errors --}}
+    @if ($errors->any())
+        <div x-data="{ show: true }" x-show="show" x-transition.opacity
+             @click.away="show=false"
+             class="mb-4 p-4 bg-red-100 text-red-700 rounded flex justify-between items-start">
+            <div>
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="list-disc ml-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <button @click="show=false" class="ml-4 font-bold text-lg">&times;</button>
+        </div>
+    @endif
+</div>
 
             <div class="mb-6">
                 <button @click="openCreateModal()"

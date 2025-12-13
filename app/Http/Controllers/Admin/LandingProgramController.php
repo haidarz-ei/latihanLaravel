@@ -30,7 +30,7 @@ class LandingProgramController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('landing/programs', 'public');
+            $data['image'] = $request->file('image')->store('programs', 'public');
         }
 
         LandingProgram::create($data);
@@ -58,7 +58,7 @@ class LandingProgramController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('landing/programs', 'public');
+            $data['image'] = $request->file('image')->store('programs', 'public');
         }
 
         $program->update($data);
@@ -71,7 +71,6 @@ class LandingProgramController extends Controller
     public function destroy($id) 
     {
         LandingProgram::destroy($id);
-
         return back()->with('success', 'Program removed.');
     }
 }

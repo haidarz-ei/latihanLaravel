@@ -71,7 +71,11 @@
                 
                 <!-- Image Content -->
                 <div class="md:w-1/2 flex justify-center">
-                    <img src="{{ asset('uploads/' . ($landing['hero_image'] ?? 'default-hero.png')) }}" alt="Mahasiswa LP3I" class="w-full max-w-2xl object-cover object-cover rounded-xl shadow-lg" />
+                    <img 
+                        src="{{ asset('storage/' . ($landing['hero_image'] ?? 'landing/default-hero.png')) }}"
+                        alt="Mahasiswa LP3I"
+                        class="w-full max-w-2xl rounded-xl shadow-lg"
+                    />
                 </div>
             </div>
         </section>
@@ -84,8 +88,24 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($programs as $program)
                     <div class="p-6 border rounded-lg shadow hover:shadow-lg transition">
-                        <h4 class="text-xl font-semibold mb-2">{{  $program->name }}</h4>
-                        <p class="text-gray-600">{{ $program->description }}</p>
+                        <!-- @if($program->icon)
+                            <div class="text-4xl mb-3">{{ $program->icon }}</div>
+                        @endif -->
+
+                        @if($program->image)
+                            <img 
+                                src="{{ asset('storage/'.$program->image) }}"
+                                class="h-16 mx-auto mb-4 rounded"
+                            >
+                        @endif
+
+                        <h4 class="text-xl font-semibold mb-2">
+                            {{ $program->title }}
+                        </h4>
+
+                        <p class="text-gray-600">
+                            {{ $program->description }}
+                        </p>
                     </div>
                 @endforeach
                 <!-- 
@@ -110,13 +130,24 @@
 <section id="tentang" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-8">
             <div class="md:w-1/2 space-y-4">
-                <h3 class="text-3xl font-bold mb-4">Tentang LP3I</h3>
-                <p class="text-gray-600">LP3I adalah lembaga pendidikan vokasi yang telah berdiri lebih dari 30 tahun, berfokus pada pendidikan yang langsung terhubung dengan dunia kerja.</p>
-                <p class="text-gray-600">Dengan kurikulum berbasis industri, dosen praktisi, dan jaringan perusahaan luas, LP3I telah membantu ribuan lulusan untuk siap bekerja sejak semester awal.</p>
+                <h3 class="text-3xl font-bold mb-4">{{ $landing['hero_title_about'] ?? 'Tentang LP3I' }}</h3>
+                <p class="text-gray-600">
+                    {{ $landing['hero_about_paragraph_1'] ?? 'LP3I adalah lembaga pendidikan vokasi yang telah berdiri lebih dari 30 tahun, berfokus pada pendidikan yang langsung terhubung dengan dunia kerja.' }}
+                </p>
+
+                <p class="text-gray-600">
+                    {{ $landing['hero_about_paragraph_2'] ?? 'Dengan kurikulum berbasis industri, dosen praktisi, dan jaringan perusahaan luas, LP3I telah membantu ribuan lulusan untuk siap bekerja sejak semester awal.' }}
+                </p>
             </div>
-            <div class="md:w-1/2">
-                <img src="{{ asset('uploads/landing/mahasiswa-lp3i.png') }}" class="rounded-xl shadow-lg" />
+            <div class="md:w-1/2 flex justify-center">
+                <img 
+                    src="{{ asset('storage/' . ($landing['hero_image_about'] ?? 'landing/default-hero.png')) }}"
+                    alt="Mahasiswa LP3I"
+                    class="w-full max-w-2xl rounded-xl shadow-lg"
+                />
             </div>
+
+
         </div>
     </section>
 
