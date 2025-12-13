@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
             'index', 'store', 'edit', 'update'
         ]);
         Route::resource('programs', LandingProgramController::class)->except(['show']);
-        Route::resource('navigation', LandingNavController::class)->except(['show']);
+        Route::resource('nav', LandingNavController::class)->except(['show']);
         Route::resource('footer', LandingFooterController::class)->except(['show']);
 
         Route::post('footer/reorder', [LandingFooterController::class, 'reorder'])->name('footer.reorder');

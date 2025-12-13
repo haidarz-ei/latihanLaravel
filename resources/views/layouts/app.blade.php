@@ -80,9 +80,9 @@
             ⛏️ Settings
         </a>
 
-        <a href="{{ route('admin.landing.navigation.index') }}"
+        <a href="{{ route('admin.landing.nav.index') }}"
             class="block px-4 py-2 hover:bg-gray-200
-            {{ request()->routeIs('admin.landing.navigation.*') ? 'bg-gray-200 font-semibold' : '' }}">
+            {{ request()->routeIs('admin.landing.nav.*') ? 'bg-gray-200 font-semibold' : '' }}">
             🧭 Menu Navigasi
         </a>
 

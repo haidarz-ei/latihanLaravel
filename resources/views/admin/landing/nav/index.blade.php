@@ -59,7 +59,7 @@
                                         </button>
 
                                         {{-- DELETE --}}
-                                        <form action="{{ route('admin.landing.navigation.destroy', $item->id) }}" method="POST" class="inline-block">
+                                        <form action="{{ route('admin.landing.nav.destroy', $item->id) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Hapus menu ini?')"
@@ -81,7 +81,7 @@
                  x-transition>
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-96 shadow-lg">
                     <h2 class="text-xl font-semibold mb-4">Tambah Menu Navigasi</h2>
-                    <form method="POST" action="{{ route('admin.landing.navigation.store') }}" class="space-y-4">
+                    <form method="POST" action="{{ route('admin.landing.nav.store') }}" class="space-y-4">
                         @csrf
                         <div>
                             <label class="block mb-1">Label</label>
@@ -122,7 +122,7 @@
                  x-transition>
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-96 shadow-lg">
                     <h2 class="text-xl font-semibold mb-4">Edit Menu</h2>
-                    <form method="POST" :action="'/admin/landing/navigation/' + editData.id" class="space-y-4">
+                    <form method="POST" :action="'/admin/landing/nav/' + editData.id" class="space-y-4">
                         @csrf
                         @method('PUT')
                         <div>
