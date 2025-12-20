@@ -4,62 +4,66 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\LandingAbout;
+use Illuminate\Support\Facades\Storage;
 
 class LandingAboutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $abouts = LandingAbout::all();
+        return view('admin.landing.about.index', compact('abouts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'paragraph_1' => 'required|string',
+            'paragraph_2' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('landing/about', 'public');
+        }
+
+        LandingAbout::create($data);
+
+        return redirect()->back()->with('success', 'About berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $about = LandingAbout::findOrFail($id);
+
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'paragraph_1' => 'required|string',
+            'paragraph_2' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($about->image) {
+                Storage::disk('public')->delete($about->image);
+            }
+            $data['image'] = $request->file('image')->store('landing/about', 'public');
+        }
+
+        $about->update($data);
+
+        return redirect()->back()->with('success', 'About berhasil diperbarui.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $about = LandingAbout::findOrFail($id);
+        if ($about->image) {
+            Storage::disk('public')->delete($about->image);
+        }
+        $about->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->back()->with('success', 'About berhasil dihapus.');
     }
 }

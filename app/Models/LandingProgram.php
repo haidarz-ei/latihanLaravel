@@ -15,6 +15,7 @@ class LandingProgram extends Model
         'title',
         'description',
         'icon',
+        'image',
         'position',
         'status',
     ];

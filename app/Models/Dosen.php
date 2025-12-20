@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
@@ -10,9 +11,9 @@ class Dosen extends Model
 
     protected $fillable = [
         'nid',
-            'nama',
-            'alamat',
-            'mata_kuliah'
+        'nama',
+        'alamat',
+        'mata_kuliah'
     ];
     
 }

@@ -26,9 +26,24 @@
                         <td class="border p-2">{{ $row->user->name ?? '-' }}</td>
                         <td class="border p-2">{{ $row->nik ?? '-' }}</td>
                         <td class="border p-2">
-                            <span class="px-2 py-1 rounded text-white
-                                {{ $row->status == 'ekyc_selesai' ? 'bg-green-500' : ($row->status == 'ekyc_ditolak' ? 'bg-red-500' : 'bg-yellow-500') }}">
-                                {{ ucfirst(str_replace('_', ' ', $row->status ?? 'belum')) }}
+                            @php
+                                $statusColors = [
+                                    'accepted' => 'bg-green-500',
+                                    'rejected' => 'bg-red-500',
+                                    'submitted' => 'bg-yellow-500',
+                                    'draft' => 'bg-gray-500',
+                                ];
+                                $statusLabels = [
+                                    'accepted' => 'Diterima',
+                                    'rejected' => 'Ditolak',
+                                    'submitted' => 'Menunggu Verifikasi',
+                                    'draft' => 'Draft',
+                                ];
+                                $color = $statusColors[$row->status] ?? 'bg-gray-500';
+                                $label = $statusLabels[$row->status] ?? ucfirst($row->status ?? 'Belum');
+                            @endphp
+                            <span class="px-2 py-1 rounded text-white {{ $color }}">
+                                {{ $label }}
                             </span>
                         </td>
                         <td class="border p-2">{{ $row->updated_at->format('d M Y H:i') }}</td>

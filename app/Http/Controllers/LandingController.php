@@ -6,6 +6,7 @@ use App\Models\LandingSetting;
 use App\Models\LandingProgram;
 use App\Models\LandingNavLink;
 use App\Models\LandingFooterLink;
+use App\Models\LandingAbout;
 use Illuminate\Support\Facades\Cache;
 
 class LandingController extends Controller
@@ -42,6 +43,10 @@ class LandingController extends Controller
                 ->get();
         });
 
-        return view('welcome', compact('landing', 'programs', 'navigation', 'footer','footerNav'));
+        $about = Cache::remember('landing_about', 5, function () {
+            return LandingAbout::first();
+        });
+
+        return view('welcome', compact('landing', 'programs', 'navigation', 'footer','footerNav', 'about'));
     }
 }

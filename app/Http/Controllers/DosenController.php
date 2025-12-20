@@ -69,6 +69,8 @@ class DosenController extends Controller
     public function destroy($id)
     {
         Dosen::destroy($id);
+        // $dosen = Dosen::findOrFail($id);
+        // $dosen->delete();
         return redirect()->route('dosen.index')
                          ->with('success', 'Dosen berhasil dihapus.');
     }

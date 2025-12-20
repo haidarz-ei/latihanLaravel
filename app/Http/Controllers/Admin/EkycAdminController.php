@@ -27,7 +27,7 @@ class EkycAdminController extends Controller
     public function verify(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:accepted,rejected',
+            'status' => 'required|in:draft,submitted,accepted,rejected',
         ]);
 
         $data = EkycRegistration::findOrFail($id);
@@ -35,6 +35,6 @@ class EkycAdminController extends Controller
         $data->save();
 
         return redirect()->route('admin.ekyc.index')
-                         ->with('success', 'Status eKYC berhasil diperbarui.');
+                         ->with('success', 'Status eKYC berhasil diperbarui menjadi: ' . ucfirst($request->status));
     }
 }

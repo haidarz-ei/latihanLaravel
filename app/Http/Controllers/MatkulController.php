@@ -66,8 +66,15 @@ class MatkulController extends Controller
      */
     public function destroy($id)
     {
-        Matkul::destroy($id);
+        // Matkul::destroy($id);
+        $matkul = Matkul::findOrFail($id);
+        $matkul->delete();
         return redirect()->route('matkul.index')
                          ->with('success', 'Matkul berhasil dihapus.');
     }
 }
+
+
+// - Matkul::destroy($id) → cepat, langsung hapus berdasarkan ID, tapi tidak bisa mengakses data sebelum dihapus dan tidak error jika ID tidak ada.
+// - findOrFail($id)->delete() → lebih aman dan fleksibel, bisa mengakses atau memproses data sebelum dihapus, dan akan menampilkan error 404 jika ID tidak ada.
+ 

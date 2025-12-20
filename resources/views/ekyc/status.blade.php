@@ -16,6 +16,12 @@
             </div>
         @endif
 
+        @if (session('info'))
+            <div class="bg-blue-100 text-blue-700 px-4 py-2 rounded-md mb-3">
+                {{ session('info') }}
+            </div>
+        @endif
+
         <div class="bg-white shadow-md rounded-xl p-6 max-w-md text-center">
             <svg class="w-16 h-16 mx-auto {{ $status == 'accepted' ? 'text-green-600' : 'text-red-600' }} mb-4"
                 fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -38,9 +44,7 @@
 
             @if ($status == 'accepted')
                 <p class="text-gray-600 mb-6">
-                    Data anda telah kami terima dan sedang dalam proses finalisasi.
-                    <br>
-                    Mohon menunggu maksimal <strong>1x24 jam</strong>.
+                    <strong>Silahkan Masuk</strong>.
                 </p>
             @endif
 

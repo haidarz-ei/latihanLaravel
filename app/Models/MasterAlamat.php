@@ -10,5 +10,10 @@ class MasterAlamat extends Model
     use HasFactory;
 
     protected $table = 'master_alamat';
-    protected $fillable = ['provinsi', 'kota', 'kecamatan', 'kode_pos'];
+    protected $fillable = [
+        'provinsi', 
+        'kota', 
+        'kecamatan', 
+        'kode_pos'
+    ];
 }
