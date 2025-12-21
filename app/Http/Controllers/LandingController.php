@@ -7,6 +7,7 @@ use App\Models\LandingProgram;
 use App\Models\LandingNavLink;
 use App\Models\LandingFooterLink;
 use App\Models\LandingAbout;
+use App\Models\LandingAboutDescription;
 use Illuminate\Support\Facades\Cache;
 
 class LandingController extends Controller
@@ -47,6 +48,12 @@ class LandingController extends Controller
             return LandingAbout::first();
         });
 
-        return view('welcome', compact('landing', 'programs', 'navigation', 'footer','footerNav', 'about'));
+        $about_descriptions = Cache::remember('landing_about_descriptions', 5, function () {
+            return LandingAboutDescription::where('status', 1)
+                ->orderBy('position')
+                ->get();
+        });
+
+        return view('welcome', compact('landing', 'programs', 'navigation', 'footer','footerNav', 'about', 'about_descriptions'));
     }
 }

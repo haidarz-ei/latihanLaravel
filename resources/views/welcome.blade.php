@@ -13,12 +13,12 @@
     <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
 
         {{-- Logo --}}
-        <img
-            src="{{ !empty($landing['site_logo'])
-                ? asset('storage/'.$landing['site_logo'])
-                : asset('uploads/landing/logoLp3i.jpg') }}"
-            class="h-10 w-auto object-contain"
-        >
+        @if(isset($landing['site_logo']) && !empty($landing['site_logo']))
+            <img
+                src="{{ asset('storage/'.$landing['site_logo']) }}"
+                class="h-10 w-auto object-contain"
+            >
+        @endif
 
         {{-- Navigation --}}
         <nav class="hidden md:flex gap-8 text-gray-700 font-medium">
@@ -54,36 +54,44 @@
     <div class="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-8">
 
         <div class="md:w-1/2 space-y-6">
-            <h2 class="text-4xl md:text-5xl font-bold">
-                {!! $landing['hero_title']
-                    ?? 'Kampus Vokasi Terbaik di Indonesia<br>Untuk Masa Depan Gemilang' !!}
-            </h2>
+            @if(isset($landing['hero_title']))
+                <h2 class="text-4xl md:text-5xl font-bold">
+                    {!! $landing['hero_title'] !!}
+                </h2>
+            @endif
 
-            <p class="text-gray-600 text-lg">
-                {!! $landing['hero_subtitle']
-                    ?? 'LP3I hadir dengan fokus pendidikan vokasi yang relevan dengan dunia kerja.' !!}
-            </p>
+            @if(isset($landing['hero_subtitle']))
+                <p class="text-gray-600 text-lg">
+                    {!! $landing['hero_subtitle'] !!}
+                </p>
+            @endif
 
             <div class="space-x-4">
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                       class="px-6 py-3 bg-blue-600 text-white rounded shadow">
-                        {{ $landing['hero_cta_primary'] ?? 'Daftar Sekarang' }}
-                    </a>
+                    @if(isset($landing['hero_cta_primary']))
+                        <a href="{{ route('register') }}"
+                           class="px-6 py-3 bg-blue-600 text-white rounded shadow">
+                            {{ $landing['hero_cta_primary'] }}
+                        </a>
+                    @endif
                 @endif
 
-                <a href="#program"
-                   class="px-6 py-3 border border-blue-600 text-blue-600 rounded">
-                    {{ $landing['hero_cta_secondary'] ?? 'Lihat Program' }}
-                </a>
+                @if(isset($landing['hero_cta_secondary']))
+                    <a href="#program"
+                       class="px-6 py-3 border border-blue-600 text-blue-600 rounded">
+                        {{ $landing['hero_cta_secondary'] }}
+                    </a>
+                @endif
             </div>
         </div>
 
         <div class="md:w-1/2 flex justify-center">
-            <img
-                src="{{ asset('storage/' . ($landing['hero_image'] ?? 'landing/default-hero.png')) }}"
-                class="w-full max-w-2xl rounded-xl shadow-lg"
-            >
+            @if(isset($landing['hero_image']))
+                <img
+                    src="{{ asset('storage/' . $landing['hero_image']) }}"
+                    class="w-full max-w-2xl rounded-xl shadow-lg"
+                >
+            @endif
         </div>
     </div>
 </section>
@@ -92,9 +100,11 @@
 <section id="program" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-6 text-center">
 
-        <h3 class="text-3xl font-bold mb-12">
-            {{ $landing['program_title'] ?? 'Program Pendidikan' }}
-        </h3>
+        @if(isset($landing['program_title']))
+            <h3 class="text-3xl font-bold mb-12">
+                {{ $landing['program_title'] }}
+            </h3>
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach($programs as $program)
@@ -126,39 +136,66 @@
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-8">
 
         <div class="md:w-1/2 space-y-4">
-            <h3 class="text-3xl font-bold">
-                {{ $about->title ?? 'Tentang LP3I' }}
-            </h3>
+            @if($about)
+                <h3 class="text-3xl font-bold">
+                    {{ $about->title }}
+                </h3>
 
-            <p class="text-gray-600">
-                {{ $about->paragraph_1 ?? 'LP3I adalah lembaga pendidikan vokasi yang telah berdiri lebih dari 30 tahun, berfokus pada pendidikan yang langsung terhubung dengan dunia kerja.' }}
-            </p>
+                @if($about->paragraph_1)
+                    <p class="text-gray-600">
+                        {{ $about->paragraph_1 }}
+                    </p>
+                @endif
 
-            <p class="text-gray-600">
-                {{ $about->paragraph_2 ?? 'Dengan kurikulum berbasis industri, dosen praktisi, dan jaringan perusahaan luas, LP3I telah membantu ribuan lulusan untuk siap bekerja sejak semester awal.' }}
-            </p>
+                @if($about->paragraph_2)
+                    <p class="text-gray-600">
+                        {{ $about->paragraph_2 }}
+                    </p>
+                @endif
+            @endif
         </div>
 
         <div class="md:w-1/2 flex justify-center">
-            <img
-                src="{{ asset('storage/' . ($about->image ?? 'landing/default-hero.png')) }}"
-                class="w-full max-w-2xl rounded-xl shadow-lg"
-            >
+            @if($about && $about->image)
+                <img
+                    src="{{ asset('storage/' . $about->image) }}"
+                    class="w-full max-w-2xl rounded-xl shadow-lg"
+                >
+            @endif
         </div>
     </div>
 </section>
+
+{{-- ================= DESKRIPSI TENTANG ================= --}}
+@if(isset($about_descriptions) && $about_descriptions->count() > 0)
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="space-y-4">
+            @foreach($about_descriptions as $desc)
+                <p class="text-gray-600 text-lg">
+                    {{ $desc->description }}
+                </p>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- ================= FOOTER ================= --}}
 <footer id="kontak" class="bg-blue-600 text-white py-12">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
 
         <div>
-            <h4 class="font-bold text-lg">
-                {{ $landing['footer_brand_title'] ?? 'LP3I' }}
-            </h4>
-            <p>
-                {{ $landing['footer_brand_description'] ?? 'Kampus vokasi mempersiapkan mahasiswa siap kerja lebih cepat.' }}
-            </p>
+            @if(isset($landing['footer_brand_title']))
+                <h4 class="font-bold text-lg">
+                    {{ $landing['footer_brand_title'] }}
+                </h4>
+            @endif
+            @if(isset($landing['footer_brand_description']))
+                <p>
+                    {{ $landing['footer_brand_description'] }}
+                </p>
+            @endif
         </div>
 
         <div>
@@ -176,13 +213,19 @@
 
         <div>
             <h4 class="font-bold text-lg mb-2">Hubungi Kami</h4>
-            <p>{{ $landing['footer_email'] ?? 'info@lp3i.ac.id' }}</p>
-            <p>{{ $landing['footer_phone'] ?? '(021) 12345678' }}</p>
+            @if(isset($landing['footer_email']))
+                <p>{{ $landing['footer_email'] }}</p>
+            @endif
+            @if(isset($landing['footer_phone']))
+                <p>{{ $landing['footer_phone'] }}</p>
+            @endif
         </div>
     </div>
 
     <div class="text-center">
-        {{ $landing['footer_text'] ?? '© 2025 LP3I. All rights reserved' }}
+        @if(isset($landing['footer_text']))
+            {{ $landing['footer_text'] }}
+        @endif
     </div>
 </footer>
 

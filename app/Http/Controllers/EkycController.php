@@ -399,11 +399,5 @@ class EkycController extends Controller
 }
 
 
-// Untuk menampilkan hasil akhir eKYC ke user.
-// show status / bagian ini dipakai buat:
-// - Menunjukkan status verifikasi setelah eKYC dikirim : (accepted / rejected)
-// - Mencegah user ngedit data lagi
-// - Kasih kepastian: diterima, ditolak, atau masih diproses
 
-// Singkatnya: halaman info hasil eKYC, bukan input data lagi.
 

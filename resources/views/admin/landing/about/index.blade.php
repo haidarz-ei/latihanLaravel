@@ -34,102 +34,127 @@
                 </div>
             @endif
 
-            <div class="mb-6">
-                <button @click="openCreateModal()"
-                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    + Tambah About
-                </button>
+            {{-- EDIT ABOUT SECTION --}}
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg mb-6">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="text-lg font-semibold mb-4">Edit About</h3>
+
+                    @if($about)
+                        <form method="POST" action="{{ route('admin.landing.about.update', $about->id) }}" enctype="multipart/form-data" class="space-y-4">
+                            @csrf
+                            @method('PUT')
+
+                            <div>
+                                <label class="block mb-1 font-medium">Judul</label>
+                                <input type="text" name="title" value="{{ old('title', $about->title) }}" class="border-gray-300 rounded-md w-full">
+                            </div>
+
+                            <div>
+                                <label class="block mb-1 font-medium">Paragraf 1</label>
+                                <textarea name="paragraph_1" rows="3" class="border-gray-300 rounded-md w-full">{{ old('paragraph_1', $about->paragraph_1) }}</textarea>
+                            </div>
+
+                            <div>
+                                <label class="block mb-1 font-medium">Paragraf 2 <span class="text-gray-500 text-sm">(Opsional)</span></label>
+                                <textarea name="paragraph_2" rows="3" class="border-gray-300 rounded-md w-full">{{ old('paragraph_2', $about->paragraph_2) }}</textarea>
+                            </div>
+
+                            <div>
+                                <label class="block mb-1 font-medium">Gambar <span class="text-gray-500 text-sm">(Opsional)</span></label>
+                                <input type="file" name="image" class="border-gray-300 rounded-md w-full">
+                                
+                                @if($about->image)
+                                    <img src="{{ asset('storage/' . $about->image) }}" class="w-32 h-32 object-cover rounded mt-2">
+                                @endif
+                            </div>
+
+                            <div class="flex justify-end gap-2 pt-2">
+                                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Update About</button>
+                            </div>
+                        </form>
+                    @else
+                        <p class="text-gray-500">Data about belum ada. Silakan jalankan seeder terlebih dahulu.</p>
+                    @endif
+                </div>
             </div>
 
+            {{-- DESKRIPSI TENTANG SECTION --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-semibold mb-4">Daftar About</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Deskripsi Tentang</h3>
+                        <button @click="openCreateDescriptionModal()"
+                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                            + Tambah Deskripsi
+                        </button>
+                    </div>
 
                     <table class="w-full border-collapse">
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
-                                <th class="px-4 py-2 border">Judul</th>
-                                <th class="px-4 py-2 border">Paragraf 1</th>
-                                <th class="px-4 py-2 border">Paragraf 2</th>
-                                <th class="px-4 py-2 border">Gambar</th>
-                                <th class="px-4 py-2 border text-center w-24">Aksi</th>
+                                <th class="px-4 py-2 border">Deskripsi</th>
+                                <th class="px-4 py-2 border">Posisi</th>
+                                <th class="px-4 py-2 border text-center w-32">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($abouts as $item)
+                            @forelse($descriptions as $desc)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="border px-4 py-2">{{ $item->title }}</td>
-                                    <td class="border px-4 py-2">{{ $item->paragraph_1 }}</td>
-                                    <td class="border px-4 py-2">{{ $item->paragraph_2 }}</td>
-                                    <td class="border px-4 py-2">
-                                        @if($item->image)
-                                            <img src="{{ asset('storage/' . $item->image) }}" 
-                                                alt="{{ $item->title }}" 
-                                                class="h-12 w-auto object-cover rounded">
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-
-
+                                    <td class="border px-4 py-2">{{ $desc->description }}</td>
+                                    <td class="border px-4 py-2">{{ $desc->position }}</td>
                                     <td class="border px-4 py-2 text-center">
-                                        <button @click='openEditModal(@json($item))'
+                                        <button @click='openEditDescriptionModal(@json($desc))'
                                                 class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-1">
                                             Edit
                                         </button>
 
-                                        <form action="{{ route('admin.landing.about.destroy', $item->id) }}"
+                                        <form action="{{ route('admin.landing.about.description.destroy', $desc->id) }}"
                                             method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    onclick="return confirm('Hapus data ini?')"
+                                                    onclick="return confirm('Hapus deskripsi ini?')"
                                                     class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
                                                 Hapus
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="border px-4 py-2 text-center text-gray-500">
+                                        Belum ada deskripsi tentang
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
 
-        <!-- MODAL CREATE -->
-        <div x-show="showCreate" x-transition
-             class="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <!-- MODAL CREATE DESKRIPSI -->
+        <div x-show="showCreateDescription" x-transition x-cloak
+             class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
 
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Tambah About</h2>
+                <h2 class="text-xl font-semibold mb-4">Tambah Deskripsi Tentang</h2>
 
-                <form method="POST" action="{{ route('admin.landing.about.store') }}" enctype="multipart/form-data" class="space-y-4">
+                <form method="POST" action="{{ route('admin.landing.about.description.store') }}" class="space-y-4">
                     @csrf
 
                     <div>
-                        <label class="block mb-1 font-medium">Judul</label>
-                        <input type="text" name="title" class="border-gray-300 rounded-md w-full" required>
+                        <label class="block mb-1 font-medium">Deskripsi</label>
+                        <textarea name="description" rows="4" class="border-gray-300 rounded-md w-full" required></textarea>
                     </div>
 
                     <div>
-                        <label class="block mb-1 font-medium">Paragraf 1</label>
-                        <textarea name="paragraph_1" rows="3" class="border-gray-300 rounded-md w-full" required></textarea>
-                    </div>
-
-                    <div>
-                        <label class="block mb-1 font-medium">Paragraf 2</label>
-                        <textarea name="paragraph_2" rows="3" class="border-gray-300 rounded-md w-full" required></textarea>
-                    </div>
-
-                    <div>
-                        <label class="block mb-1 font-medium">Gambar</label>
-                        <input type="file" name="image" class="border-gray-300 rounded-md w-full">
+                        <label class="block mb-1 font-medium">Posisi <span class="text-gray-500 text-sm">(Opsional)</span></label>
+                        <input type="number" name="position" class="border-gray-300 rounded-md w-full" placeholder="Auto">
                     </div>
 
                     <div class="flex justify-end gap-2 pt-2">
-                        <button type="button" @click="showCreate = false"
+                        <button type="button" @click="showCreateDescription = false"
                                 class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Batal</button>
                         <button type="submit"
                                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
@@ -138,44 +163,29 @@
             </div>
         </div>
 
-        <!-- MODAL EDIT -->
-        <div x-show="showEdit" x-transition
-             class="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <!-- MODAL EDIT DESKRIPSI -->
+        <div x-show="showEditDescription" x-transition x-cloak
+             class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
 
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Edit About</h2>
+                <h2 class="text-xl font-semibold mb-4">Edit Deskripsi Tentang</h2>
 
-                <form method="POST" :action="'/admin/landing/about/' + editData.id" enctype="multipart/form-data" class="space-y-4">
+                <form method="POST" :action="'/admin/landing/about/description/' + editDescriptionData.id" class="space-y-4">
                     @csrf
                     @method('PUT')
 
                     <div>
-                        <label class="block mb-1 font-medium">Judul</label>
-                        <input type="text" name="title" x-model="editData.title" class="border-gray-300 rounded-md w-full" required>
+                        <label class="block mb-1 font-medium">Deskripsi</label>
+                        <textarea name="description" x-model="editDescriptionData.description" rows="4" class="border-gray-300 rounded-md w-full" required></textarea>
                     </div>
 
                     <div>
-                        <label class="block mb-1 font-medium">Paragraf 1</label>
-                        <textarea name="paragraph_1" x-model="editData.paragraph_1" rows="3" class="border-gray-300 rounded-md w-full" required></textarea>
+                        <label class="block mb-1 font-medium">Posisi</label>
+                        <input type="number" name="position" x-model="editDescriptionData.position" class="border-gray-300 rounded-md w-full">
                     </div>
-
-                    <div>
-                        <label class="block mb-1 font-medium">Paragraf 2</label>
-                        <textarea name="paragraph_2" x-model="editData.paragraph_2" rows="3" class="border-gray-300 rounded-md w-full" required></textarea>
-                    </div>
-
-                    <div>
-                        <label class="block mb-1 font-medium">Gambar</label>
-                        <input type="file" name="image" class="border-gray-300 rounded-md w-full">
-                        
-                        <template x-if="editData.image">
-                            <img :src="'/storage/' + editData.image" class="w-32 h-32 object-cover rounded mt-2">
-                        </template>
-                    </div>
-
 
                     <div class="flex justify-end gap-2 pt-2">
-                        <button type="button" @click="showEdit = false" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Batal</button>
+                        <button type="button" @click="showEditDescription = false" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Batal</button>
                         <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">Update</button>
                     </div>
                 </form>
@@ -187,52 +197,24 @@
     <script>
         function aboutPage() {
             return {
-                showCreate: false,
-                showEdit: false,
-                editData: {},
+                showCreateDescription: false,
+                showEditDescription: false,
+                editDescriptionData: {},
 
-                openCreateModal() {
-                    this.showCreate = true;
+                openCreateDescriptionModal() {
+                    this.showCreateDescription = true;
                 },
-                openEditModal(item) {
-                    this.editData = {
+                openEditDescriptionModal(item) {
+                    this.editDescriptionData = {
                         id: item.id,
-                        title: item.title,
-                        paragraph_1: item.paragraph_1,
-                        paragraph_2: item.paragraph_2,
-                        image: item.image
+                        description: item.description,
+                        position: item.position
                     };
-                    this.showEdit = true;
+                    this.showEditDescription = true;
                 }
             }
         }
     </script>
 
-    {{-- 
-    Laporan Singkat Halaman Pengelolaan About
-    
-    Halaman ini menyediakan interface untuk mengelola konten "Tentang" landing page dengan pendekatan modal-based 
-    menggunakan Alpine.js. Sistem mendukung pengelolaan multiple about entries dengan gambar, memungkinkan admin 
-    untuk menampilkan berbagai informasi tentang institusi atau organisasi.
-    
-    Fitur Utama:
-    - Tambah About: Modal create dengan form lengkap (title, 2 paragraf, image) dan validasi semua field wajib.
-    - Edit About: Modal edit dengan preview image saat ini, memungkinkan update semua field termasuk upload 
-      gambar baru dengan penghapusan otomatis gambar lama.
-    - Hapus About: Konfirmasi sebelum hapus dan penghapusan file image dari storage.
-    - Pengelolaan File: Penghapusan otomatis file image lama saat upload file baru atau hapus data.
-    
-    Teknologi:
-    - Alpine.js untuk interaktivitas modal dan data binding.
-    - Blade template dengan validasi frontend dan backend.
-    - Storage management untuk file image dengan cleanup otomatis.
-    - Flash messages dengan Alpine.js untuk notifikasi yang dapat ditutup.
-    
-    Keunggulan:
-    - Interface sederhana dan mudah digunakan.
-    - Preview image saat edit untuk memudahkan admin melihat konten saat ini.
-    - Cleanup file otomatis untuk menghemat storage.
-    - Validasi lengkap untuk memastikan data konsisten.
-    --}}
-
 </x-app-layout>
+

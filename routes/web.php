@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Mahasiswa
+    // Mahasiswae
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
@@ -62,7 +62,10 @@ Route::middleware('auth')->group(function () {
         Route::post('footer/reorder', [LandingFooterController::class, 'reorder'])->name('footer.reorder');
         Route::patch('footer/{id}/status', [LandingFooterController::class, 'toggleStatus'])->name('footer.toggleStatus');
         Route::post('footer/brand', [LandingFooterController::class, 'saveBrand'])->name('footer.brand.save');
-        Route::resource('about', LandingAboutController::class)->except(['show']);
+        Route::resource('about', LandingAboutController::class)->except(['show', 'create', 'store']);
+        Route::post('about/description', [LandingAboutController::class, 'storeDescription'])->name('about.description.store');
+        Route::put('about/description/{id}', [LandingAboutController::class, 'updateDescription'])->name('about.description.update');
+        Route::delete('about/description/{id}', [LandingAboutController::class, 'destroyDescription'])->name('about.description.destroy');
     });
 });
 
